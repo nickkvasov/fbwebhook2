@@ -5,8 +5,7 @@ This is a simple Node.JS template that uses Express and has mongodb set up. It i
 Assuming you already have an OpenShift account
 1) Create a Node.JS application and add a mongo cartridge
 
-	rhc app create -t nodejs-0.6 -a <your app name>
-	rhc app cartridge add -a <your app name> -c mongodb-2.0
+	rhc app create <your app name> nodejs-0.6 mongodb-2
 
 2) cd into the directory that matches your application name
 	
