@@ -11,7 +11,7 @@ Assuming you already have an OpenShift account
 	
 	cd <your app name>
 	
-3) add this git repository to your application
+3) add this git repository as an upstream to your application
 	
 	git remote add upstream -m master git://github.com/openshift/simple_node_express_mongo.git
 
@@ -19,7 +19,7 @@ Assuming you already have an OpenShift account
 
 	git pull -s recursive -X theirs upstream master
 	
-5) Modify the code and push back up to your OpenShift gear
+5) Modify the code and push back up to your OpenShift application
 
 	git push
 	
