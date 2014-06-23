@@ -17,17 +17,15 @@ var App = function(){
   self.dbUser = process.env.OPENSHIFT_MONGODB_DB_USERNAME;
   self.dbPass = process.env.OPENSHIFT_MONGODB_DB_PASSWORD;
 
-  self.ipaddr  = process.env.OPENSHIFT_INTERNAL_IP;
-  self.port    = parseInt(process.env.OPENSHIFT_INTERNAL_PORT) || 8080;
+  self.ipaddr  = process.env.OPENSHIFT_NODEJS_IP;
+  self.port    = parseInt(process.env.OPENSHIFT_NODEJS_PORT) || 8080;
 
   if (typeof self.ipaddr === "undefined") {
-    console.warn('No OPENSHIFT_INTERNAL_IP environment variable');
+    console.warn('No OPENSHIFT_NODEJS_IP environment variable');
   };
-  
-  
-   
 
   // Web app logic
+
   self.routes = {};
   self.routes['health'] = function(req, res){ res.send('1'); };
 
@@ -38,15 +36,12 @@ var App = function(){
     });
   };
 
-    // Webapp urls
+  // Webapp urls
   
   self.app  = express.createServer();
   self.app.get('/health', self.routes['health']);
   self.app.get('/', self.routes['root']);
  
-
-
-
   // Logic to open a database connection. We are going to call this outside of app so it is available to all our functions inside.
 
   self.connectDb = function(callback){
@@ -58,7 +53,6 @@ var App = function(){
       });
     });
   };
-  
   
   //starting the nodejs server with express
 

@@ -1,28 +1,51 @@
-#A simple Node.JS, Express, and Mongo template for OpenShift
-This is a simple Node.JS template that uses Express and has mongodb set up. It is all wired to go in OpenShift. I would not recommend using this for a more complicated application, as there should be more seperation into different files for different logic.
+Simple Node.JS, Express, and Mongo template for OpenShift
+=========================================================
 
-##How to use
+This is a simple Node.JS template that uses Express and has mongodb set up. It is all wired to go in OpenShift. 
+I would not recommend using this for a more complicated application, as there should be more seperation into different 
+files for different logic.
+
+Running on OpenShift
+--------------------
+
 Assuming you already have an OpenShift account
+
 1) Create a Node.JS application and add a mongo cartridge
 
-	rhc app create <your app name> nodejs-0.6 mongodb-2
+	rhc app create <your app name> nodejs-0.10 mongodb-2 --from-code=https://github.com/openshift-quickstart/nodejs-example.git
+
+By default flag ```--from-code``` will add this repository as an upstream, which can be use later to pull updates.
 
 2) cd into the directory that matches your application name
 	
 	cd <your app name>
-	
-3) add this git repository as an upstream to your application
-	
-	git remote add upstream -m master git://github.com/openshift-quickstart/simple_node_express_mongo.git
 
-4) merge this repository into your application
-
-	git pull -s recursive -X theirs upstream master
-	
-5) Modify the code and push back up to your OpenShift application
+3) Modify the code and push back up to your OpenShift application
 
 	git push
 	
+
+This application lists all entries in ```names``` table, by default it's empty, so entering your application should give you following output
+
+	[]
+
+For the application to show some data, connect to your application using ssh
+
+	rhc ssh
+
+Then run following commands
+
+	mongo 										# runs mongo CLI
+	show dbs 									# shows all dbs 
+	use <your app name>							# or check output from previous command for it's name
+	db.names.find()								# gives you names' entries, should be empty
+	db.names.insert({name: 'a', surname: 'b'})	# inserts object into names
+	db.names.find()								# should return previously inserted object
+
+Now running the application in the browser should also return inserted object.
+
+Notes
+-----
 
 The MongoDB code you want to modify can be found in this line
 
