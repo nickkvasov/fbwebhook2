@@ -30,15 +30,29 @@ var App = function(){
   self.routes['health'] = function(req, res){ res.send('1'); };
 
   self.routes['root'] = function(req, res){
-    self.db.collection('names').find().toArray(function(err, names) {
-        res.header("Content-Type:","text/json");
-        res.end(JSON.stringify(names));
-    });
+     res.send('You have come to the park apps web service. All the web services are at /ws/parks*. For example /ws/parks will return all the parks in the system in a JSON payload. Thanks for stopping by and have a nice day');
+
+////    self.db.collection('names').find().toArray(function(err, names) {
+////        res.header("Content-Type:","text/json");
+////       res.end(JSON.stringify(names));
+ ////   });
   };
 
   // Webapp urls
   
-  self.app  = express.createServer();
+////  self.app  = express.createServer();
+  
+
+  self.app  = express();
+ 
+  //This uses the Connect frameworks body parser to parse the body of the post request  
+  self.app.configure(function () {
+    self.app.use(express.bodyParser());
+    self.app.use(express.methodOverride());
+    self.app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+  });
+
+
   self.app.get('/health', self.routes['health']);
   self.app.get('/', self.routes['root']);
  
